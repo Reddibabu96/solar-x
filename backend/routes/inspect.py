@@ -161,7 +161,7 @@ async def predict_single_image(
         raise HTTPException(status_code=500, detail=f"AI Processing Failure: {str(e)}")
 
 @router.post("/batch-predict")
-async def batch_predict(files: List[UploadFile] = File(...)):
+async def batch_predict(files: list[UploadFile] = File(...)):
     results = []
     start_time = time.time()
     

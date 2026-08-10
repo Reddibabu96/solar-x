@@ -32,6 +32,36 @@ app.include_router(panels_router)
 app.include_router(analytics_router)
 app.include_router(reports_router)
 
+from fastapi.openapi.utils import get_openapi
+
+def custom_openapi():
+    if app.openapi_schema:
+        return app.openapi_schema
+    openapi_schema = get_openapi(
+        title=app.title,
+        version=app.version,
+        description=app.description,
+        routes=app.routes,
+    )
+    schemas = openapi_schema.get("components", {}).get("schemas", {})
+    for schema in schemas.values():
+        if isinstance(schema, dict) and "properties" in schema:
+            for prop_name, prop in schema["properties"].items():
+                if prop.get("type") == "array" and isinstance(prop.get("items"), dict):
+                    if prop["items"].get("contentMediaType") == "application/octet-stream" or prop_name == "files":
+                        prop["items"]["format"] = "binary"
+                elif prop.get("contentMediaType") == "application/octet-stream" or prop_name == "file":
+                    if "anyOf" in prop:
+                        for item in prop["anyOf"]:
+                            if isinstance(item, dict) and item.get("contentMediaType") == "application/octet-stream":
+                                item["format"] = "binary"
+                    else:
+                        prop["format"] = "binary"
+    app.openapi_schema = openapi_schema
+    return app.openapi_schema
+
+app.openapi = custom_openapi
+
 @app.on_event("startup")
 def on_startup():
     init_db()

@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOLARGUARD X — Industrial Solar AI Decision Platform</title>
+    <meta name="description" content="Intelligent Solar Panel Defect Detection, Health Assessment, Risk Estimation & Predictive Maintenance Prioritization Platform">
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+        <div class="brand">
+            <span class="brand-icon">⚡</span>
+            <div>
+                <div class="brand-title">SOLARGUARD X</div>
+                <div class="brand-subtitle">PREDICTIVE MAINTAINABILITY</div>
+            </div>
+        </div>
+
+        <nav class="nav-group">
+            <a href="#" class="nav-item active" data-target="sec-dashboard">
+                <span class="nav-icon">📊</span> Executive Dashboard
+            </a>
+            <a href="#" class="nav-item" data-target="sec-digital-twin">
+                <span class="nav-icon">🗺️</span> Solar Farm Digital Twin
+            </a>
+            <a href="#" class="nav-item" data-target="sec-inspection-studio">
+                <span class="nav-icon">🔍</span> AI Inspection Studio
+            </a>
+            <a href="#" class="nav-item" data-target="sec-comparison">
+                <span class="nav-icon">⚖️</span> Panel Profile & Comparison
+            </a>
+            <a href="#" class="nav-item" data-target="sec-analytics">
+                <span class="nav-icon">📈</span> Farm Analytics
+            </a>
+            <a href="#" class="nav-item" data-target="sec-governance">
+                <span class="nav-icon">🧠</span> ML Model Performance
+            </a>
+        </nav>
+
+        <div style="padding: 12px; background: rgba(56, 189, 248, 0.05); border: 1px solid var(--border-card); border-radius: 10px; font-size: 11px; color: var(--text-muted); margin-top: auto;">
+            <strong>SOLAR-ALPHA-01</strong><br>
+            100 PV Modules Monitored<br>
+            Status: Fully Operational
+        </div>
+    </aside>
+
+    <!-- Main Workspace Container -->
+    <main class="main-wrapper">
+        <!-- Top Header Bar -->
+        <header class="top-header">
+            <div class="header-title-box">
+                <h1 id="page-title">Solar Farm Operations & Predictive Decision Platform</h1>
+                <p>"Don't just detect solar defects. Predict which panels need attention first."</p>
+            </div>
+            <div class="header-controls">
+                <div class="mode-badge">
+                    <span class="pulse-dot"></span> AI Inference Online
+                </div>
+                <label style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-muted); cursor: pointer;">
+                    <input type="checkbox" id="tech-mode-toggle"> Technician Field Mode
+                </label>
+            </div>
+        </header>
+
+        <!-- SECTION 1: EXECUTIVE DASHBOARD -->
+        <section id="sec-dashboard" class="app-section">
+            <div class="kpi-grid">
+                <div class="glass-card kpi-card">
+                    <span class="kpi-title">Total Solar Panels</span>
+                    <span class="kpi-value" id="kpi-total-panels">100</span>
+                    <span class="kpi-sub">Farm Array: 10x10 Monocrystalline</span>
+                </div>
+                <div class="glass-card kpi-card">
+                    <span class="kpi-title">Healthy Panels</span>
+                    <span class="kpi-value" style="color: var(--badge-green);" id="kpi-healthy-panels">72</span>
+                    <span class="kpi-sub">🟢 Operating > 90/100 Health</span>
+                </div>
+                <div class="glass-card kpi-card">
+                    <span class="kpi-title">Monitor & Warning</span>
+                    <span class="kpi-value" style="color: var(--badge-orange);" id="kpi-warning-panels">25</span>
+                    <span class="kpi-sub">🟡 / 🟠 Scheduled for Inspection</span>
+                </div>
+                <div class="glass-card kpi-card">
+                    <span class="kpi-title">Critical Panels</span>
+                    <span class="kpi-value" style="color: var(--badge-red);" id="kpi-critical-panels">3</span>
+                    <span class="kpi-sub">🔴 Action Required < 30 Health</span>
+                </div>
+                <div class="glass-card kpi-card">
+                    <span class="kpi-title">Average Farm Health</span>
+                    <span class="kpi-value" style="color: var(--primary-cyan);" id="kpi-avg-health">82.4/100</span>
+                    <span class="kpi-sub">Farm-Wide Degradation Rate</span>
+                </div>
+                <div class="glass-card kpi-card">
+                    <span class="kpi-title">P1 Urgent Action Items</span>
+                    <span class="kpi-value" style="color: var(--badge-red);" id="kpi-urgent-p1">3</span>
+                    <span class="kpi-sub">O&M Inspection within 24-48h</span>
+                </div>
+            </div>
+
+            <!-- Urgent Maintenance Priorities Table -->
+            <div class="glass-card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                    <h3 style="font-size: 18px; font-weight: 700; color: var(--text-main);">🚨 Priority Panel Maintenance Queue</h3>
+                    <span style="font-size: 12px; color: var(--text-muted);">Auto-ranked by AI Priority Score</span>
+                </div>
+                <table style="width: 100%; text-align: left; border-collapse: collapse; font-size: 14px;">
+                    <thead>
+                        <tr style="border-bottom: 1px solid var(--border-card); color: var(--text-muted); font-size: 12px; text-transform: uppercase;">
+                            <th style="padding: 12px;">Panel ID</th>
+                            <th style="padding: 12px;">Health Score</th>
+                            <th style="padding: 12px;">Risk Score</th>
+                            <th style="padding: 12px;">Primary Defect</th>
+                            <th style="padding: 12px;">Priority Rank</th>
+                            <th style="padding: 12px;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="recent-urgent-tbody">
+                        <!-- Populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- SECTION 2: SOLAR FARM DIGITAL TWIN -->
+        <section id="sec-digital-twin" class="app-section" style="display: none;">
+            <div class="glass-card" style="margin-bottom: 20px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+                    <div>
+                        <h2 style="font-size: 20px; font-weight: 700;">🗺️ Solar Farm Digital Twin (SOLAR-ALPHA-01)</h2>
+                        <p style="font-size: 13px; color: var(--text-muted);">Click any panel cell to open its complete digital profile & 60-day historical health trend.</p>
+                    </div>
+                    <div style="display: flex; gap: 12px;">
+                        <input type="text" id="twin-search" placeholder="Search Panel ID or Defect..." style="background: rgba(15, 23, 42, 0.8); border: 1px solid var(--border-card); color: white; padding: 8px 14px; border-radius: 8px; font-size: 13px;">
+                        <select id="twin-prio-filter" style="background: rgba(15, 23, 42, 0.8); border: 1px solid var(--border-card); color: white; padding: 8px 14px; border-radius: 8px; font-size: 13px;">
+                            <option value="">All Priorities</option>
+                            <option value="P1">P1 — URGENT</option>
+                            <option value="P2">P2 — HIGH</option>
+                            <option value="P3">P3 — MEDIUM</option>
+                            <option value="P4">P4 — LOW</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Digital Twin 100-Panel Grid -->
+                <div id="digital-twin-grid" class="farm-grid-container">
+                    <!-- Populated by DigitalTwinGrid JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: AI INSPECTION STUDIO -->
+        <section id="sec-inspection-studio" class="app-section" style="display: none;">
+            <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 24px;">
+                <!-- Left Column: Inspection Viewer -->
+                <div class="glass-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                        <h3 style="font-size: 18px; font-weight: 700;">🔍 AI Inspection & Explainability Studio</h3>
+                        <span id="studio-status-text" style="font-size: 12px; color: var(--primary-cyan);">Ready for Analysis</span>
+                    </div>
+
+
+
+                    <!-- Upload Drag-and-Drop Zone -->
+                    <div id="studio-dropzone" style="border: 2px dashed rgba(56, 189, 248, 0.3); border-radius: 12px; padding: 20px; text-align: center; cursor: pointer; margin-bottom: 16px; background: rgba(15, 23, 42, 0.5);">
+                        <span style="font-size: 28px;">📤</span>
+                        <div style="font-size: 14px; font-weight: 600; color: var(--text-main); margin-top: 4px;">Drag & Drop Solar Inspection Image or Click to Upload</div>
+                        <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">Supports JPG, PNG, WEBP, TIFF (Max 15MB)</div>
+                        <input type="file" id="studio-file-input" accept="image/*" style="display: none;">
+                    </div>
+
+                    <!-- Visual View Switcher Tabs -->
+                    <div class="view-mode-tabs">
+                        <button class="vtab-btn" data-mode="original">Original</button>
+                        <button class="vtab-btn" data-mode="preprocessed">Preprocessed (CLAHE)</button>
+                        <button class="vtab-btn" data-mode="detection">Detection Bounding Box</button>
+                        <button class="vtab-btn" data-mode="segmentation">Pixel Mask</button>
+                        <button class="vtab-btn active" data-mode="heatmap">XAI Grad-CAM Heatmap</button>
+                    </div>
+
+                    <!-- Display Canvas / Image Box -->
+                    <div class="image-canvas-box">
+                        <img id="studio-display-img" src="/static/preset_hotspot.png" alt="Solar Panel Inspection Image">
+                    </div>
+                </div>
+
+                <!-- Right Column: AI Decision Engine Outputs -->
+                <div class="glass-card" style="display: flex; flex-direction: column; gap: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-card); padding-bottom: 12px;">
+                        <div>
+                            <span id="res-panel-code" style="font-size: 20px; font-weight: 800; color: var(--primary-cyan);">PNL-017</span>
+                            <div id="res-defect-type" style="font-size: 14px; font-weight: 600; color: var(--text-main);">Thermal Hotspot Burnout</div>
+                        </div>
+                        <div>
+                            <span id="res-priority-badge" class="pbadge P1">P1 — URGENT</span>
+                        </div>
+                    </div>
+
+                    <!-- Key Decision Metrics -->
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;">
+                        <div style="background: rgba(15, 23, 42, 0.7); padding: 12px; border-radius: 10px; border: 1px solid var(--border-card);">
+                            <div style="font-size: 11px; color: var(--text-muted);">Panel Health Score</div>
+                            <div id="res-health-score" style="font-size: 20px; font-weight: 800; color: var(--badge-red);">21.4/100</div>
+                        </div>
+                        <div style="background: rgba(15, 23, 42, 0.7); padding: 12px; border-radius: 10px; border: 1px solid var(--border-card);">
+                            <div style="font-size: 11px; color: var(--text-muted);">AI Maintenance Risk</div>
+                            <div id="res-risk-score" style="font-size: 20px; font-weight: 800; color: var(--badge-red);">86.5/100</div>
+                        </div>
+                        <div style="background: rgba(15, 23, 42, 0.7); padding: 12px; border-radius: 10px; border: 1px solid var(--border-card);">
+                            <div style="font-size: 11px; color: var(--text-muted);">Model Confidence</div>
+                            <div id="res-confidence" style="font-size: 18px; font-weight: 700; color: var(--text-main);">94%</div>
+                        </div>
+                        <div style="background: rgba(15, 23, 42, 0.7); padding: 12px; border-radius: 10px; border: 1px solid var(--border-card);">
+                            <div style="font-size: 11px; color: var(--text-muted);">Affected Surface Area</div>
+                            <div id="res-affected-area" style="font-size: 18px; font-weight: 700; color: var(--text-main);">14.8%</div>
+                        </div>
+                    </div>
+
+                    <!-- XAI Priority Score Contribution Chart -->
+                    <div>
+                        <div style="font-size: 13px; font-weight: 700; color: var(--text-main); margin-bottom: 8px;">🧠 XAI Priority Breakdown (Why P1?)</div>
+                        <div style="height: 140px;">
+                            <canvas id="chart-priority-contrib"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- What is Damaged Feature Card -->
+                    <div style="background: rgba(250, 204, 21, 0.08); border: 1px solid rgba(250, 204, 21, 0.3); padding: 14px; border-radius: 10px;">
+                        <div style="font-size: 11px; font-weight: 700; color: #facc15; text-transform: uppercase;">🛠️ What is Damaged? (Technical Diagnosis)</div>
+                        <div id="res-what-damaged" style="font-size: 13px; color: var(--text-main); margin-top: 4px; line-height: 1.5;">
+                            Thermal Overheating & Sub-String Cell Burnout: Severe localized temperature surge (> 85°C) caused by reverse-bias current dissipation.
+                        </div>
+                    </div>
+
+                    <!-- Remediation Method Feature Card -->
+                    <div style="background: rgba(56, 189, 248, 0.08); border: 1px solid var(--primary-cyan); padding: 14px; border-radius: 10px;">
+                        <div style="font-size: 11px; font-weight: 700; color: var(--primary-cyan); text-transform: uppercase;">🔧 Remediation & Repair Method</div>
+                        <div id="res-remediation-method" style="font-size: 13px; color: var(--text-main); margin-top: 4px; line-height: 1.5;">
+                            Bypass Diode Replacement & MPPT Tuning: Replace shorted Schottky bypass diodes in junction box, clean glass surface, rebalance inverter MPPT channel.
+                        </div>
+                    </div>
+
+                    <!-- Recommended Action Box -->
+                    <div style="background: rgba(239, 68, 68, 0.08); border: 1px solid var(--badge-red); padding: 14px; border-radius: 10px;">
+                        <div style="font-size: 11px; font-weight: 700; color: var(--badge-red); text-transform: uppercase;">O&M Dispatch Action</div>
+                        <div id="res-action" style="font-size: 13px; color: var(--text-main); margin-top: 4px; line-height: 1.5;">
+                            Dispatch O&M technician within 24–48 hours for immediate thermal bypass / string disconnection & replacement.
+                        </div>
+                    </div>
+
+                    <!-- Natural Language AI Summary -->
+                    <div style="background: rgba(15, 23, 42, 0.8); border: 1px solid var(--border-card); padding: 14px; border-radius: 10px;">
+                        <div style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">AI Decision Summary</div>
+                        <div id="res-ai-summary" style="font-size: 12px; color: var(--text-muted); margin-top: 4px; line-height: 1.5;">
+                            Panel exhibits Thermal Hotspot Burnout affecting approximately 14.8% of the inspection region. With a severity score of 82/100 and health score of 21.4/100, the panel is assigned AI maintenance risk of 86.5/100 and prioritized as P1 — URGENT.
+                        </div>
+                    </div>
+
+                    <button class="btn-primary" onclick="triggerReportGeneration()" style="width: 100%; margin-top: auto;">📄 Generate Inspection Report</button>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: PANEL PROFILE & COMPARISON -->
+        <section id="sec-comparison" class="app-section" style="display: none;">
+            <div class="glass-card" style="margin-bottom: 24px;">
+                <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 16px;">⚖️ Side-by-Side Panel Comparison Tool</h3>
+                <div style="display: flex; gap: 16px; align-items: center; margin-bottom: 20px;">
+                    <div>
+                        <label style="font-size: 12px; color: var(--text-muted);">Select Panel A:</label><br>
+                        <input type="text" id="cmp-panel-a" value="PNL-017" style="background: rgba(15, 23, 42, 0.8); border: 1px solid var(--border-card); color: white; padding: 8px 12px; border-radius: 8px;">
+                    </div>
+                    <div>
+                        <label style="font-size: 12px; color: var(--text-muted);">Select Panel B:</label><br>
+                        <input type="text" id="cmp-panel-b" value="PNL-031" style="background: rgba(15, 23, 42, 0.8); border: 1px solid var(--border-card); color: white; padding: 8px 12px; border-radius: 8px;">
+                    </div>
+                    <button class="btn-primary" id="btn-run-comparison" style="margin-top: 18px;">Compare Panels</button>
+                </div>
+
+                <div style="height: 280px;">
+                    <canvas id="chart-comparison"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 5: FARM ANALYTICS -->
+        <section id="sec-analytics" class="app-section" style="display: none;">
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px;">
+                <div class="glass-card">
+                    <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 16px;">🍩 Farm-Wide Defect Distribution</h3>
+                    <div style="height: 300px;">
+                        <canvas id="chart-defect-distribution"></canvas>
+                    </div>
+                </div>
+                <div class="glass-card">
+                    <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 16px;">📉 Degradation & Risk Factors</h3>
+                    <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6;">
+                        Solar farm <strong>SOLAR-ALPHA-01</strong> currently displays 72% optimal operational health. 
+                        Primary degradation contributors are <strong>Thermal Hotspots (14.8% area impact)</strong> and <strong>Micro-crack propagation</strong> along high-stress string boundaries.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 6: MODEL PERFORMANCE & GOVERNANCE -->
+        <section id="sec-governance" class="app-section" style="display: none;">
+            <div class="glass-card">
+                <h3 style="font-size: 20px; font-weight: 700; margin-bottom: 16px;">🧠 Verified ML Model Benchmarks</h3>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px;">
+                    <div style="background: rgba(15, 23, 42, 0.8); padding: 16px; border-radius: 12px; border: 1px solid var(--border-card);">
+                        <div style="font-size: 12px; color: var(--text-muted);">Accuracy</div>
+                        <div id="metric-accuracy" style="font-size: 28px; font-weight: 800; color: var(--badge-green);">94.8%</div>
+                    </div>
+                    <div style="background: rgba(15, 23, 42, 0.8); padding: 16px; border-radius: 12px; border: 1px solid var(--border-card);">
+                        <div style="font-size: 12px; color: var(--text-muted);">Precision</div>
+                        <div id="metric-precision" style="font-size: 28px; font-weight: 800; color: var(--primary-cyan);">93.2%</div>
+                    </div>
+                    <div style="background: rgba(15, 23, 42, 0.8); padding: 16px; border-radius: 12px; border: 1px solid var(--border-card);">
+                        <div style="font-size: 12px; color: var(--text-muted);">Recall</div>
+                        <div id="metric-recall" style="font-size: 28px; font-weight: 800; color: var(--energy-yellow);">95.6%</div>
+                    </div>
+                    <div style="background: rgba(15, 23, 42, 0.8); padding: 16px; border-radius: 12px; border: 1px solid var(--border-card);">
+                        <div style="font-size: 12px; color: var(--text-muted);">F1-Score</div>
+                        <div id="metric-f1" style="font-size: 28px; font-weight: 800; color: var(--primary-cyan);">94.4%</div>
+                    </div>
+                    <div style="background: rgba(15, 23, 42, 0.8); padding: 16px; border-radius: 12px; border: 1px solid var(--border-card);">
+                        <div style="font-size: 12px; color: var(--text-muted);">Segmentation IoU</div>
+                        <div id="metric-iou" style="font-size: 28px; font-weight: 800; color: var(--primary-cyan);">86.4%</div>
+                    </div>
+                    <div style="background: rgba(15, 23, 42, 0.8); padding: 16px; border-radius: 12px; border: 1px solid var(--border-card);">
+                        <div style="font-size: 12px; color: var(--text-muted);">Inference Latency</div>
+                        <div id="metric-latency" style="font-size: 28px; font-weight: 800; color: var(--badge-green);">38.5 ms</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- PANEL DETAIL MODAL / DRAWER -->
+    <div id="panel-detail-modal" class="modal-backdrop">
+        <div class="modal-content">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-card); padding-bottom: 16px; margin-bottom: 20px;">
+                <div>
+                    <h2 id="mdl-panel-code" style="font-size: 24px; font-weight: 800; color: var(--primary-cyan);">PNL-017</h2>
+                    <div style="font-size: 13px; color: var(--text-muted);">Solar Array Digital Profile & Degradation History</div>
+                </div>
+                <button class="btn-secondary" onclick="closePanelModal()">✕ Close</button>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px;">
+                <div style="background: rgba(15, 23, 42, 0.8); padding: 12px; border-radius: 10px;">
+                    <div style="font-size: 11px; color: var(--text-muted);">Health Score</div>
+                    <div id="mdl-health" style="font-size: 20px; font-weight: 800; color: var(--badge-red);">21.4/100</div>
+                </div>
+                <div style="background: rgba(15, 23, 42, 0.8); padding: 12px; border-radius: 10px;">
+                    <div style="font-size: 11px; color: var(--text-muted);">AI Risk Score</div>
+                    <div id="mdl-risk" style="font-size: 20px; font-weight: 800; color: var(--badge-red);">86.5/100</div>
+                </div>
+                <div style="background: rgba(15, 23, 42, 0.8); padding: 12px; border-radius: 10px;">
+                    <div style="font-size: 11px; color: var(--text-muted);">Severity Score</div>
+                    <div id="mdl-severity" style="font-size: 20px; font-weight: 800; color: var(--badge-red);">82.0/100</div>
+                </div>
+                <div style="background: rgba(15, 23, 42, 0.8); padding: 12px; border-radius: 10px;">
+                    <div style="font-size: 11px; color: var(--text-muted);">Priority Rank</div>
+                    <span id="mdl-prio-badge" class="pbadge P1" style="margin-top: 4px; display: inline-block;">P1 URGENT</span>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <h4 style="font-size: 14px; font-weight: 700; color: var(--text-main); margin-bottom: 12px;">📈 60-Day Health Degradation Trend Line</h4>
+                <div style="height: 240px; background: rgba(15, 23, 42, 0.6); padding: 12px; border-radius: 12px; border: 1px solid var(--border-card);">
+                    <canvas id="chart-panel-history"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/charts.js"></script>
+    <script src="/static/js/digital_twin.js"></script>
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

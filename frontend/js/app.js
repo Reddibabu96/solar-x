@@ -1,9 +1,12 @@
 // SOLARGUARD X Application Controller
 console.log("SOLARGUARD X frontend JavaScript loaded");
 
-const API_URL = "https://solar-x.onrender.com";
-const PREDICT_URL = `${API_URL}/api/batch-predict`;
-const API_BASE = window.location.origin.includes('render.com') ? '' : API_URL;
+if (typeof window.API_URL === 'undefined') {
+    window.API_URL = "https://solar-x.onrender.com";
+}
+var API_URL = window.API_URL;
+var PREDICT_URL = `${API_URL}/api/batch-predict`;
+var API_BASE = window.location.origin.includes('render.com') ? '' : API_URL;
 
 let digitalTwin = null;
 let currentInspectionData = null;
@@ -360,7 +363,6 @@ async function runInspectionAnalysis(filesOrFile, presetKey) {
 
         setStatus('Generating maintenance priority...');
 
-        const PREDICT_URL = `${API_URL}/api/batch-predict`;
         const res = await fetch(PREDICT_URL, {
             method: 'POST',
             body: formData

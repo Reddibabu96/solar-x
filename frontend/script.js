@@ -614,16 +614,28 @@ function updateStudioDisplayImage() {
     const imgElem = document.getElementById('studio-display-img');
     if (!imgElem) return;
 
+    let b64 = null;
     if (activeImageMode === 'original') {
-        imgElem.src = `data:image/jpeg;base64,${currentInspectionData.original_b64}`;
+        b64 = currentInspectionData.original_b64 || currentInspectionData.local_preview;
     } else if (activeImageMode === 'preprocessed') {
-        imgElem.src = `data:image/jpeg;base64,${currentInspectionData.preprocessed_b64}`;
+        b64 = currentInspectionData.preprocessed_b64 || currentInspectionData.original_b64 || currentInspectionData.local_preview;
     } else if (activeImageMode === 'detection') {
-        imgElem.src = `data:image/jpeg;base64,${currentInspectionData.detection_b64}`;
+        b64 = currentInspectionData.detection_b64 || currentInspectionData.original_b64 || currentInspectionData.local_preview;
     } else if (activeImageMode === 'segmentation') {
-        imgElem.src = `data:image/jpeg;base64,${currentInspectionData.segmentation_b64}`;
+        b64 = currentInspectionData.segmentation_b64 || currentInspectionData.original_b64 || currentInspectionData.local_preview;
     } else { // heatmap
-        imgElem.src = `data:image/jpeg;base64,${currentInspectionData.heatmap_b64}`;
+        b64 = currentInspectionData.heatmap_b64 || currentInspectionData.detection_b64 || currentInspectionData.original_b64 || currentInspectionData.local_preview;
+    }
+
+    if (!b64) {
+        imgElem.src = "preset_hotspot.png";
+        return;
+    }
+
+    if (b64.startsWith('data:') || b64.startsWith('http://') || b64.startsWith('https://') || b64.startsWith('blob:')) {
+        imgElem.src = b64;
+    } else {
+        imgElem.src = `data:image/jpeg;base64,${b64}`;
     }
 }
 

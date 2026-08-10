@@ -269,7 +269,7 @@
 
                     <!-- Recommended Action Box -->
                     <div style="background: rgba(239, 68, 68, 0.08); border: 1px solid var(--badge-red); padding: 14px; border-radius: 10px;">
-                        <div style="font-size: 11px; font-weight: 700; color: var(--badge-red); text-transform: uppercase;">O&M Dispatch Action</div>
+                        <div style="font-size: 11px; font-weight: 700; color: var(--badge-red); text-transform: uppercase;">Engineering recommendation — field verification required.</div>
                         <div id="res-action" style="font-size: 13px; color: var(--text-main); margin-top: 4px; line-height: 1.5;">
                             Dispatch O&M technician within 24–48 hours for immediate thermal bypass / string disconnection & replacement.
                         </div>
@@ -277,7 +277,7 @@
 
                     <!-- Natural Language AI Summary -->
                     <div style="background: rgba(15, 23, 42, 0.8); border: 1px solid var(--border-card); padding: 14px; border-radius: 10px;">
-                        <div style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">AI Decision Summary</div>
+                        <div style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">AI-Detected Pattern Summary</div>
                         <div id="res-ai-summary" style="font-size: 12px; color: var(--text-muted); margin-top: 4px; line-height: 1.5;">
                             Panel exhibits Thermal Hotspot Burnout affecting approximately 14.8% of the inspection region. With a severity score of 82/100 and health score of 21.4/100, the panel is assigned AI maintenance risk of 86.5/100 and prioritized as P1 — URGENT.
                         </div>
@@ -305,7 +305,7 @@
                     <button class="btn-primary" id="btn-run-comparison" style="margin-top: 18px;">Compare Panels</button>
                 </div>
 
-                <div style="height: 280px;">
+                <div style="height: 280px; background: rgba(15, 23, 42, 0.6); padding: 16px; border-radius: 12px; border: 1px solid var(--border-card);">
                     <canvas id="chart-comparison"></canvas>
                 </div>
             </div>
@@ -313,51 +313,42 @@
 
         <!-- SECTION 5: FARM ANALYTICS -->
         <section id="sec-analytics" class="app-section" style="display: none;">
-            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px;">
-                <div class="glass-card">
-                    <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 16px;">🍩 Farm-Wide Defect Distribution</h3>
-                    <div style="height: 300px;">
-                        <canvas id="chart-defect-distribution"></canvas>
-                    </div>
-                </div>
-                <div class="glass-card">
-                    <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 16px;">📉 Degradation & Risk Factors</h3>
-                    <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6;">
-                        Solar farm <strong>SOLAR-ALPHA-01</strong> currently displays 72% optimal operational health. 
-                        Primary degradation contributors are <strong>Thermal Hotspots (14.8% area impact)</strong> and <strong>Micro-crack propagation</strong> along high-stress string boundaries.
-                    </p>
+            <div class="glass-card">
+                <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 16px;">📈 Solar Farm Health Distribution & Analytics</h3>
+                <div style="height: 320px;">
+                    <canvas id="chart-defect-distribution"></canvas>
                 </div>
             </div>
         </section>
 
-        <!-- SECTION 6: MODEL PERFORMANCE & GOVERNANCE -->
+        <!-- SECTION 6: ML MODEL GOVERNANCE -->
         <section id="sec-governance" class="app-section" style="display: none;">
             <div class="glass-card">
-                <h3 style="font-size: 20px; font-weight: 700; margin-bottom: 16px;">🧠 Verified ML Model Benchmarks</h3>
-                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px;">
-                    <div style="background: rgba(15, 23, 42, 0.8); padding: 16px; border-radius: 12px; border: 1px solid var(--border-card);">
+                <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 16px;">🧠 ML Model Performance & Validation Telemetry</h3>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+                    <div style="background: rgba(15, 23, 42, 0.8); padding: 16px; border-radius: 10px;">
                         <div style="font-size: 12px; color: var(--text-muted);">Accuracy</div>
-                        <div id="metric-accuracy" style="font-size: 28px; font-weight: 800; color: var(--badge-green);">94.8%</div>
+                        <div id="metric-accuracy" style="font-size: 24px; font-weight: 800; color: var(--primary-cyan);">94.8%</div>
                     </div>
-                    <div style="background: rgba(15, 23, 42, 0.8); padding: 16px; border-radius: 12px; border: 1px solid var(--border-card);">
+                    <div style="background: rgba(15, 23, 42, 0.8); padding: 16px; border-radius: 10px;">
                         <div style="font-size: 12px; color: var(--text-muted);">Precision</div>
-                        <div id="metric-precision" style="font-size: 28px; font-weight: 800; color: var(--primary-cyan);">93.2%</div>
+                        <div id="metric-precision" style="font-size: 24px; font-weight: 800; color: var(--primary-cyan);">93.2%</div>
                     </div>
-                    <div style="background: rgba(15, 23, 42, 0.8); padding: 16px; border-radius: 12px; border: 1px solid var(--border-card);">
+                    <div style="background: rgba(15, 23, 42, 0.8); padding: 16px; border-radius: 10px;">
                         <div style="font-size: 12px; color: var(--text-muted);">Recall</div>
-                        <div id="metric-recall" style="font-size: 28px; font-weight: 800; color: var(--energy-yellow);">95.6%</div>
+                        <div id="metric-recall" style="font-size: 24px; font-weight: 800; color: var(--primary-cyan);">95.1%</div>
                     </div>
-                    <div style="background: rgba(15, 23, 42, 0.8); padding: 16px; border-radius: 12px; border: 1px solid var(--border-card);">
-                        <div style="font-size: 12px; color: var(--text-muted);">F1-Score</div>
-                        <div id="metric-f1" style="font-size: 28px; font-weight: 800; color: var(--primary-cyan);">94.4%</div>
+                    <div style="background: rgba(15, 23, 42, 0.8); padding: 16px; border-radius: 10px;">
+                        <div style="font-size: 12px; color: var(--text-muted);">F1 Score</div>
+                        <div id="metric-f1" style="font-size: 24px; font-weight: 800; color: var(--primary-cyan);">94.1%</div>
                     </div>
-                    <div style="background: rgba(15, 23, 42, 0.8); padding: 16px; border-radius: 12px; border: 1px solid var(--border-card);">
+                    <div style="background: rgba(15, 23, 42, 0.8); padding: 16px; border-radius: 10px;">
                         <div style="font-size: 12px; color: var(--text-muted);">Segmentation IoU</div>
-                        <div id="metric-iou" style="font-size: 28px; font-weight: 800; color: var(--primary-cyan);">86.4%</div>
+                        <div id="metric-iou" style="font-size: 24px; font-weight: 800; color: var(--primary-cyan);">88.7%</div>
                     </div>
-                    <div style="background: rgba(15, 23, 42, 0.8); padding: 16px; border-radius: 12px; border: 1px solid var(--border-card);">
+                    <div style="background: rgba(15, 23, 42, 0.8); padding: 16px; border-radius: 10px;">
                         <div style="font-size: 12px; color: var(--text-muted);">Inference Latency</div>
-                        <div id="metric-latency" style="font-size: 28px; font-weight: 800; color: var(--badge-green);">38.5 ms</div>
+                        <div id="metric-latency" style="font-size: 24px; font-weight: 800; color: var(--energy-yellow);">124.5 ms</div>
                     </div>
                 </div>
             </div>
@@ -367,10 +358,10 @@
     <!-- PANEL DETAIL MODAL / DRAWER -->
     <div id="panel-detail-modal" class="modal-backdrop">
         <div class="modal-content">
-            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-card); padding-bottom: 16px; margin-bottom: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                 <div>
-                    <h2 id="mdl-panel-code" style="font-size: 24px; font-weight: 800; color: var(--primary-cyan);">PNL-017</h2>
-                    <div style="font-size: 13px; color: var(--text-muted);">Solar Array Digital Profile & Degradation History</div>
+                    <h3 id="mdl-panel-code" style="font-size: 24px; font-weight: 800; color: var(--primary-cyan);">PNL-017</h3>
+                    <div id="mdl-defect" style="font-size: 14px; color: var(--text-muted); text-transform: capitalize;">Thermal Hotspot</div>
                 </div>
                 <button class="btn-secondary" onclick="closePanelModal()">✕ Close</button>
             </div>
@@ -381,7 +372,7 @@
                     <div id="mdl-health" style="font-size: 20px; font-weight: 800; color: var(--badge-red);">21.4/100</div>
                 </div>
                 <div style="background: rgba(15, 23, 42, 0.8); padding: 12px; border-radius: 10px;">
-                    <div style="font-size: 11px; color: var(--text-muted);">AI Risk Score</div>
+                    <div style="font-size: 11px; color: var(--text-muted);">AI-assisted maintenance risk score</div>
                     <div id="mdl-risk" style="font-size: 20px; font-weight: 800; color: var(--badge-red);">86.5/100</div>
                 </div>
                 <div style="background: rgba(15, 23, 42, 0.8); padding: 12px; border-radius: 10px;">
@@ -403,8 +394,8 @@
         </div>
     </div>
 
-    <script src="charts.js"></script>
-    <script src="digital_twin.js"></script>
-    <script src="script.js"></script>
+    <script src="charts.js" defer></script>
+    <script src="digital_twin.js" defer></script>
+    <script src="script.js" defer></script>
 </body>
 </html>

@@ -1,6 +1,8 @@
 // SOLARGUARD X Application Controller
+console.log("SOLARGUARD X frontend JavaScript loaded");
 
 const API_URL = "https://solar-x.onrender.com";
+const PREDICT_URL = `${API_URL}/api/batch-predict`;
 const API_BASE = window.location.origin.includes('render.com') ? '' : API_URL;
 
 let digitalTwin = null;
@@ -282,7 +284,7 @@ async function initPresets() {
     }
 }
 
-// Execute Inspection Analysis API sending to ${API_URL}/api/batch-predict
+// Execute Inspection Analysis API sending to ${PREDICT_URL}
 async function runInspectionAnalysis(filesOrFile, presetKey) {
     const statusText = document.getElementById('studio-status-text');
     const setStatus = (txt) => {
@@ -296,12 +298,23 @@ async function runInspectionAnalysis(filesOrFile, presetKey) {
             ? Array.from(filesOrFile)
             : [filesOrFile];
 
+        if (fileArray.length === 0) {
+            setStatus('⚠️ No image files selected.');
+            return;
+        }
+
+        // Validate image file types
+        const validFile = fileArray.find(f => f && f.type && f.type.startsWith('image/'));
+        if (!validFile && fileArray.length > 0 && fileArray[0].type && !fileArray[0].type.startsWith('image/')) {
+            setStatus('⚠️ Invalid file type. Please select a valid image (JPG, PNG, WEBP).');
+            return;
+        }
+
         fileArray.forEach(file => {
             formData.append("files", file);
         });
     } else if (presetKey) {
-        // Preset fallback logic
-        setStatus('Loading preset sample...');
+        setStatus('Connecting to SolarGuard AI Engine...');
         try {
             const res = await fetch(`${API_BASE}/api/predict`, {
                 method: 'POST',
@@ -313,7 +326,7 @@ async function runInspectionAnalysis(filesOrFile, presetKey) {
             setStatus(`Analysis Complete (${singleData.inference_latency_ms || 120} ms)`);
             return;
         } catch (e) {
-            console.warn('Single predict preset fallback failed, using batch endpoint.');
+            console.warn('Single predict preset fallback failed, attempting batch endpoint.');
         }
     } else {
         setStatus('⚠️ No image selected');
@@ -325,27 +338,28 @@ async function runInspectionAnalysis(filesOrFile, presetKey) {
     // Timer warning for Render sleeping backend
     const timeoutWarning = setTimeout(() => {
         if (!isFinished) {
-            setStatus('⏳ Render backend is spinning up (free tier sleeping)... Please wait (~30s).');
+            setStatus('⏳ AI backend is waking up (Render free tier)... Please wait ~30 seconds.');
         }
-    }, 5000);
+    }, 6000);
 
     try {
-        // Step 1: Uploading image...
-        setStatus('Uploading image...');
-        await delayMs(350);
-
-        // Step 2: Analyzing solar panel...
-        setStatus('Analyzing solar panel...');
-        await delayMs(350);
-
-        // Step 3: Calculating health and risk...
-        setStatus('Calculating health and risk...');
+        // Progressive Loading Messages per requirement #8
+        setStatus('Connecting to SolarGuard AI Engine...');
         await delayMs(300);
 
-        // Step 4: Generating maintenance priority...
+        setStatus('Uploading inspection image...');
+        await delayMs(300);
+
+        setStatus('Running defect analysis...');
+        await delayMs(300);
+
+        setStatus('Calculating severity, health and risk...');
+        await delayMs(300);
+
         setStatus('Generating maintenance priority...');
 
-        const res = await fetch(`${API_URL}/api/batch-predict`, {
+        const PREDICT_URL = `${API_URL}/api/batch-predict`;
+        const res = await fetch(PREDICT_URL, {
             method: 'POST',
             body: formData
             // Content-Type is intentionally omitted so the browser sets multipart/form-data boundary
@@ -355,17 +369,21 @@ async function runInspectionAnalysis(filesOrFile, presetKey) {
         clearTimeout(timeoutWarning);
 
         if (!res.ok) {
-            throw new Error(`Backend response error (Status ${res.status})`);
+            let errorText = '';
+            try {
+                errorText = await res.text();
+            } catch (e) {}
+            throw new Error(`HTTP ${res.status}: ${errorText || res.statusText}`);
         }
 
         const data = await res.json();
         const rawItems = data.results || (Array.isArray(data) ? data : [data]);
 
         if (!rawItems || rawItems.length === 0) {
-            throw new Error("Empty prediction results received.");
+            throw new Error("Empty prediction results received from AI backend.");
         }
 
-        // Format each result item to include all 13 required fields
+        // Format each result item to include all required fields
         batchResults = rawItems.map((item, idx) => formatInspectionItem(item, idx));
         selectedBatchIndex = 0;
 
@@ -379,7 +397,7 @@ async function runInspectionAnalysis(filesOrFile, presetKey) {
         isFinished = true;
         clearTimeout(timeoutWarning);
         console.error('Batch Inspection Error:', err);
-        setStatus(`❌ Error: ${err.message || 'Render backend is offline or sleeping. Try again in 30 seconds.'}`);
+        setStatus(`❌ AI backend is temporarily unavailable. Please retry in a few seconds.`);
     }
 }
 

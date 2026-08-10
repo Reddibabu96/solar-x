@@ -166,9 +166,15 @@
                     <!-- Upload Drag-and-Drop Zone -->
                     <div id="studio-dropzone" style="border: 2px dashed rgba(56, 189, 248, 0.3); border-radius: 12px; padding: 20px; text-align: center; cursor: pointer; margin-bottom: 16px; background: rgba(15, 23, 42, 0.5);">
                         <span style="font-size: 28px;">📤</span>
-                        <div style="font-size: 14px; font-weight: 600; color: var(--text-main); margin-top: 4px;">Drag & Drop Solar Inspection Image or Click to Upload</div>
-                        <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">Supports JPG, PNG, WEBP, TIFF (Max 15MB)</div>
-                        <input type="file" id="studio-file-input" accept="image/*" style="display: none;">
+                        <div style="font-size: 14px; font-weight: 600; color: var(--text-main); margin-top: 4px;">Drag & Drop Solar Inspection Image(s) or Click to Upload</div>
+                        <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">Supports Single & Multiple Uploads (JPG, PNG, WEBP, TIFF - Max 15MB)</div>
+                        <input type="file" id="studio-file-input" accept="image/*" multiple style="display: none;">
+                    </div>
+
+                    <!-- Batch Selected File Selector (Shows when multiple files uploaded) -->
+                    <div id="batch-selector-container" style="display: none; margin-bottom: 12px; background: rgba(15, 23, 42, 0.6); padding: 10px; border-radius: 8px; border: 1px solid var(--border-card);">
+                        <label style="font-size: 11px; color: var(--text-muted); display: block; margin-bottom: 4px;">📂 Select Uploaded Inspection File:</label>
+                        <select id="batch-file-select" style="width: 100%; background: #0f172a; border: 1px solid var(--primary-cyan); color: #fff; padding: 6px 10px; border-radius: 6px; font-size: 12px;"></select>
                     </div>
 
                     <!-- Visual View Switcher Tabs -->
@@ -198,23 +204,42 @@
                         </div>
                     </div>
 
-                    <!-- Key Decision Metrics -->
-                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;">
-                        <div style="background: rgba(15, 23, 42, 0.7); padding: 12px; border-radius: 10px; border: 1px solid var(--border-card);">
-                            <div style="font-size: 11px; color: var(--text-muted);">Panel Health Score</div>
-                            <div id="res-health-score" style="font-size: 20px; font-weight: 800; color: var(--badge-red);">21.4/100</div>
+                    <!-- Key Decision Metrics (Updated with Severity, Defect Count, Image Quality) -->
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+                        <div style="background: rgba(15, 23, 42, 0.7); padding: 10px; border-radius: 10px; border: 1px solid var(--border-card);">
+                            <div style="font-size: 10px; color: var(--text-muted);">Panel Health Score</div>
+                            <div id="res-health-score" style="font-size: 18px; font-weight: 800; color: var(--badge-red);">21.4/100</div>
                         </div>
-                        <div style="background: rgba(15, 23, 42, 0.7); padding: 12px; border-radius: 10px; border: 1px solid var(--border-card);">
-                            <div style="font-size: 11px; color: var(--text-muted);">AI Maintenance Risk</div>
-                            <div id="res-risk-score" style="font-size: 20px; font-weight: 800; color: var(--badge-red);">86.5/100</div>
+                        <div style="background: rgba(15, 23, 42, 0.7); padding: 10px; border-radius: 10px; border: 1px solid var(--border-card);">
+                            <div style="font-size: 10px; color: var(--text-muted);">AI Maintenance Risk</div>
+                            <div id="res-risk-score" style="font-size: 18px; font-weight: 800; color: var(--badge-red);">86.5/100</div>
                         </div>
-                        <div style="background: rgba(15, 23, 42, 0.7); padding: 12px; border-radius: 10px; border: 1px solid var(--border-card);">
-                            <div style="font-size: 11px; color: var(--text-muted);">Model Confidence</div>
-                            <div id="res-confidence" style="font-size: 18px; font-weight: 700; color: var(--text-main);">94%</div>
+                        <div style="background: rgba(15, 23, 42, 0.7); padding: 10px; border-radius: 10px; border: 1px solid var(--border-card);">
+                            <div style="font-size: 10px; color: var(--text-muted);">Severity Score</div>
+                            <div id="res-severity-score" style="font-size: 18px; font-weight: 800; color: var(--badge-red);">82.0/100</div>
                         </div>
-                        <div style="background: rgba(15, 23, 42, 0.7); padding: 12px; border-radius: 10px; border: 1px solid var(--border-card);">
-                            <div style="font-size: 11px; color: var(--text-muted);">Affected Surface Area</div>
-                            <div id="res-affected-area" style="font-size: 18px; font-weight: 700; color: var(--text-main);">14.8%</div>
+                        <div style="background: rgba(15, 23, 42, 0.7); padding: 10px; border-radius: 10px; border: 1px solid var(--border-card);">
+                            <div style="font-size: 10px; color: var(--text-muted);">Model Confidence</div>
+                            <div id="res-confidence" style="font-size: 16px; font-weight: 700; color: var(--text-main);">94%</div>
+                        </div>
+                        <div style="background: rgba(15, 23, 42, 0.7); padding: 10px; border-radius: 10px; border: 1px solid var(--border-card);">
+                            <div style="font-size: 10px; color: var(--text-muted);">Affected Surface Area</div>
+                            <div id="res-affected-area" style="font-size: 16px; font-weight: 700; color: var(--text-main);">14.8%</div>
+                        </div>
+                        <div style="background: rgba(15, 23, 42, 0.7); padding: 10px; border-radius: 10px; border: 1px solid var(--border-card);">
+                            <div style="font-size: 10px; color: var(--text-muted);">Defect Count</div>
+                            <div id="res-defect-count" style="font-size: 16px; font-weight: 700; color: var(--text-main);">1</div>
+                        </div>
+                    </div>
+
+                    <!-- Image Quality Metrics Card -->
+                    <div style="background: rgba(15, 23, 42, 0.6); padding: 12px; border-radius: 10px; border: 1px solid var(--border-card);">
+                        <div style="font-size: 11px; font-weight: 700; color: var(--primary-cyan); margin-bottom: 6px;">📷 Image Quality & Sensor Telemetry</div>
+                        <div id="res-image-quality" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; font-size: 11px; color: var(--text-muted);">
+                            <div>Sharpness: <span id="qual-sharpness" style="color:#fff; font-weight:600;">88.5</span></div>
+                            <div>Contrast: <span id="qual-contrast" style="color:#fff; font-weight:600;">76.2</span></div>
+                            <div>Brightness: <span id="qual-brightness" style="color:#fff; font-weight:600;">64.0</span></div>
+                            <div>Noise: <span id="qual-noise" style="color:#fff; font-weight:600;">12.1</span></div>
                         </div>
                     </div>
 

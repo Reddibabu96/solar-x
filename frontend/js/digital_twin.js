@@ -1,4 +1,5 @@
-const API_BASE = window.location.origin.includes('render.com') ? '' : 'https://solar-x.onrender.com';
+const API_URL = "https://solar-x.onrender.com";
+const API_BASE = window.location.origin.includes('render.com') ? '' : API_URL;
 
 class DigitalTwinGrid {
     constructor(containerId, onPanelClickCallback) {

@@ -48,13 +48,11 @@ function initNavigation() {
             }
 
             if (targetId === 'sec-digital-twin') {
-                if (digitalTwin) digitalTwin.loadPanels();
+                digitalTwin.loadPanels();
             } else if (targetId === 'sec-analytics') {
                 loadAnalyticsData();
             } else if (targetId === 'sec-dashboard') {
                 loadDashboardSummary();
-            } else if (targetId === 'sec-governance') {
-                loadModelPerformance();
             }
         });
     });
@@ -288,8 +286,7 @@ async function initPresets() {
         console.error('Failed to load presets:', err);
     }
 }
-
-// Helper to convert uploaded File into Data URL for instant rendering
+    // Helper to convert uploaded File into Data URL for instant rendering
 function readFileAsDataURL(file) {
     return new Promise((resolve) => {
         if (!file || !(file instanceof File)) return resolve(null);
@@ -458,7 +455,7 @@ function formatInspectionItem(item, idx, filePreviews = []) {
     const displayName = item.display_name || (defect === 'hotspot' ? 'Thermal Hotspot Burnout' : defect === 'microcrack' ? 'Micro-Crack Fracture' : defect === 'crack' ? 'Major Structural Crack' : defect === 'delamination' ? 'EVA Encapsulation Delamination' : 'Healthy Solar Panel');
     
     let priorityCode = item.priority_code || (risk > 75 ? 'P1 — URGENT' : risk > 50 ? 'P2 — HIGH' : risk > 30 ? 'P3 — MEDIUM' : 'P4 — LOW');
-    let priorityColor = item.priority_color || (priorityCode.includes('P1') ? 'red' : priorityCode.includes('P2') ? 'orange' : priorityCode.includes('P3') ? 'yellow' : 'green');
+    let priorityColor = item.priority_color || (priorityCode.includes('P1') ? 'red' : priorityCode.includes('P2') ? 'orange' : priorityColor.includes('P3') ? 'yellow' : 'green');
     
     const healthLevel = item.health_level || (health > 90 ? 'Excellent' : health > 75 ? 'Good' : health > 50 ? 'Monitor' : health > 25 ? 'Warning' : 'Critical');
     const healthBadge = item.health_badge || (health > 75 ? '🟢' : health > 50 ? '🟡' : '🔴');
@@ -708,25 +705,7 @@ async function openPanelDetailModal(panelCode) {
 
         renderHealthHistoryChart('chart-panel-history', data.history, p.panel_code);
     } catch (err) {
-        console.warn('Failed to load panel detail, rendering fallback detail:', err);
-        document.getElementById('mdl-panel-code').textContent = panelCode;
-        document.getElementById('mdl-health').textContent = `21.4/100`;
-        document.getElementById('mdl-risk').textContent = `86.5/100`;
-        document.getElementById('mdl-severity').textContent = `82.0/100`;
-        document.getElementById('mdl-defect').textContent = 'hotspot';
-        document.getElementById('mdl-area').textContent = `14.8%`;
-        
-        const badge = document.getElementById('mdl-prio-badge');
-        badge.textContent = 'P1 — URGENT';
-        badge.className = 'pbadge P1';
-
-        renderHealthHistoryChart('chart-panel-history', [
-            { day_offset: -60, health_score: 98.0 },
-            { day_offset: -45, health_score: 91.5 },
-            { day_offset: -30, health_score: 74.0 },
-            { day_offset: -15, health_score: 45.2 },
-            { day_offset: 0, health_score: 21.4 }
-        ], panelCode);
+        console.error('Failed to load panel detail:', err);
     }
 }
 
@@ -749,11 +728,7 @@ async function initPanelComparison() {
             const data = await res.json();
             renderComparisonChart('chart-comparison', data.panel_a, data.panel_b);
         } catch (err) {
-            console.warn('Backend sleeping, rendering fallback comparison chart:', err);
-            renderComparisonChart('chart-comparison', 
-                { panel_code: panelA, current_health: 21.4, current_severity: 82.0, current_risk: 86.5, affected_area_pct: 14.8 },
-                { panel_code: panelB, current_health: 98.0, current_severity: 0.0, current_risk: 5.0, affected_area_pct: 0.0 }
-            );
+            console.error('Failed to run comparison:', err);
         }
     });
 }

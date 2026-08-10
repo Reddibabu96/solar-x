@@ -284,6 +284,8 @@ async function initPresets() {
         });
     } catch (err) {
         console.error('Failed to load presets:', err);
+    }
+}
     // Helper to convert uploaded File into Data URL for instant rendering
 function readFileAsDataURL(file) {
     return new Promise((resolve) => {
@@ -532,8 +534,6 @@ function formatInspectionItem(item, idx, filePreviews = []) {
         detection_b64: item.detection_b64 || item.original_b64 || localPreview,
         segmentation_b64: item.segmentation_b64 || item.original_b64 || localPreview,
         heatmap_b64: item.heatmap_b64 || item.detection_b64 || item.original_b64 || localPreview
-    };
-}atmap_b64: item.heatmap_b64 || null
     };
 }
 

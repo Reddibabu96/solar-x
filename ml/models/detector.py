@@ -83,7 +83,7 @@ class SolarVisionDetector:
 
     def numpy_to_b64(self, img_bgr: np.ndarray) -> str:
         """Helper to convert BGR numpy image to base64 JPEG string."""
-        _, buffer = cv2.imencode(".jpg", img_bgr, [int(cv2.IMWRITE_JPEG_QUALITY), 90])
+        _, buffer = cv2.imencode(".jpg", img_bgr, [int(cv2.IMWRITE_JPEG_QUALITY), 75])
         return base64.b64encode(buffer).decode("utf-8")
 
     def detect_and_segment(self, preprocessed_gray: np.ndarray, original_bgr: np.ndarray) -> Dict[str, Any]:

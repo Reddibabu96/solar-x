@@ -15,7 +15,7 @@ class GradCAMGenerator:
     Generates explainability heatmaps showing exact pixel regions driving AI model decisions.
     """
     def numpy_to_b64(self, img_bgr: np.ndarray) -> str:
-        _, buffer = cv2.imencode(".jpg", img_bgr, [int(cv2.IMWRITE_JPEG_QUALITY), 90])
+        _, buffer = cv2.imencode(".jpg", img_bgr, [int(cv2.IMWRITE_JPEG_QUALITY), 75])
         return base64.b64encode(buffer).decode("utf-8")
 
     def generate_heatmap(self, preprocessed_gray: np.ndarray, original_bgr: np.ndarray, segmentation_mask: np.ndarray = None) -> str:

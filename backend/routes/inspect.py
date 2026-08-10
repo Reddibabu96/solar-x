@@ -93,11 +93,11 @@ def _process_image_bytes(image_bytes: bytes, panel_code: str = "PNL-017", filena
         print(f"Database write non-fatal warning: {db_err}")
 
     # Convert original image to base64 for frontend comparison
-    _, orig_buffer = cv2.imencode(".jpg", original_bgr)
+    _, orig_buffer = cv2.imencode(".jpg", original_bgr, [int(cv2.IMWRITE_JPEG_QUALITY), 75])
     original_b64 = base64.b64encode(orig_buffer).decode("utf-8")
 
     # Prep preprocessed b64
-    _, prep_buffer = cv2.imencode(".jpg", preprocessed_gray)
+    _, prep_buffer = cv2.imencode(".jpg", preprocessed_gray, [int(cv2.IMWRITE_JPEG_QUALITY), 75])
     preprocessed_b64 = base64.b64encode(prep_buffer).decode("utf-8")
 
     return {

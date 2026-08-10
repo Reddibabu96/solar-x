@@ -1,4 +1,4 @@
-// SOLARGUARD X Digital Twin Grid Component
+const API_BASE = window.location.origin.includes('render.com') ? '' : 'https://solar-x.onrender.com';
 
 class DigitalTwinGrid {
     constructor(containerId, onPanelClickCallback) {
@@ -9,7 +9,7 @@ class DigitalTwinGrid {
     }
 
     async loadPanels(filters = {}) {
-        let url = '/api/panels?1=1';
+        let url = `${API_BASE}/api/panels?1=1`;
         if (filters.search) url += `&search=${encodeURIComponent(filters.search)}`;
         if (filters.priority) url += `&priority=${encodeURIComponent(filters.priority)}`;
         if (filters.badge) url += `&badge=${encodeURIComponent(filters.badge)}`;

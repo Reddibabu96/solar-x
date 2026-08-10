@@ -1,5 +1,7 @@
 // SOLARGUARD X Application Controller
 
+const API_BASE = window.location.origin.includes('render.com') ? '' : 'https://solar-x.onrender.com';
+
 let digitalTwin = null;
 let currentInspectionData = null;
 let activeImageMode = 'heatmap';
@@ -83,7 +85,7 @@ function initDigitalTwin() {
 // Dashboard Stats Loader
 async function loadDashboardSummary() {
     try {
-        const res = await fetch('/api/dashboard');
+        const res = await fetch(`${API_BASE}/api/dashboard`);
         const data = await res.json();
 
         document.getElementById('kpi-total-panels').textContent = data.total_panels;
@@ -120,7 +122,7 @@ async function loadDashboardSummary() {
 // Analytics Data Loader
 async function loadAnalyticsData() {
     try {
-        const res = await fetch('/api/analytics');
+        const res = await fetch(`${API_BASE}/api/analytics`);
         const data = await res.json();
         renderDefectChart('chart-defect-distribution', data.defect_distribution);
     } catch (err) {
@@ -131,7 +133,7 @@ async function loadAnalyticsData() {
 // Model Performance Loader
 async function loadModelPerformance() {
     try {
-        const res = await fetch('/api/model-performance');
+        const res = await fetch(`${API_BASE}/api/model-performance`);
         const data = await res.json();
 
         document.getElementById('metric-accuracy').textContent = `${(data.accuracy * 100).toFixed(1)}%`;
@@ -193,7 +195,7 @@ async function initPresets() {
     if (!presetContainer) return;
 
     try {
-        const res = await fetch('/api/demo-presets');
+        const res = await fetch(`${API_BASE}/api/demo-presets`);
         const data = await res.json();
 
         presetContainer.innerHTML = '';
@@ -227,7 +229,7 @@ async function runInspectionAnalysis(fileObj, presetKey) {
     formData.append('panel_code', 'PNL-017');
 
     try {
-        const res = await fetch('/api/predict', {
+        const res = await fetch(`${API_BASE}/api/predict`, {
             method: 'POST',
             body: formData
         });
@@ -297,7 +299,7 @@ async function openPanelDetailModal(panelCode) {
     modal.classList.add('open');
 
     try {
-        const res = await fetch(`/api/panels/${panelCode}`);
+        const res = await fetch(`${API_BASE}/api/panels/${panelCode}`);
         const data = await res.json();
         const p = data.panel;
 
@@ -333,7 +335,7 @@ async function initPanelComparison() {
         const panelB = document.getElementById('cmp-panel-b').value;
 
         try {
-            const res = await fetch(`/api/panels/compare?panel_a=${panelA}&panel_b=${panelB}`);
+            const res = await fetch(`${API_BASE}/api/panels/compare?panel_a=${panelA}&panel_b=${panelB}`);
             const data = await res.json();
             renderComparisonChart('chart-comparison', data.panel_a, data.panel_b);
         } catch (err) {
@@ -347,7 +349,7 @@ function triggerReportGeneration() {
     const panelCode = currentInspectionData ? currentInspectionData.panel_code : 'PNL-017';
     const form = document.createElement('form');
     form.method = 'POST';
-    form.action = '/api/reports/generate';
+    form.action = `${API_BASE}/api/reports/generate`;
     form.target = '_blank';
 
     const input = document.createElement('input');
